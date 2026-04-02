@@ -1,0 +1,7 @@
+streamlit
+langchain
+langchain-google-genai
+duckduckgo-search
+crewai
+crewai-tools
+pydantic<2.9.0
