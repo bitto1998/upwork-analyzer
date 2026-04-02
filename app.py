@@ -6,7 +6,7 @@ from crewai import Agent, Task, Crew, Process
 
 # Creates the Webpage Look
 st.set_page_config(page_title="Upwork AI Optimizer", layout="wide")
-st.title("🚀 Upwork Competitor Analyzer (3.1 PRO VERSION)")
+st.title("🚀 Upwork Competitor Analyzer (PRO VERSION)")
 st.markdown("This system secretly browses top Upwork profiles for you and finds out what words make them rank high.")
 
 # Loads your Google VIP Pass (API Key) safely
@@ -23,8 +23,8 @@ client = st.text_input("Who is your ideal client?", value="E-commerce stores")
 if st.button("Start Scraping and Analyzing"):
     with st.spinner("AI is thinking... Give it 1 to 3 minutes. Do not close the page."):
         
-        # ---> UPDATED TO USE YOUR NEW 3.1 PRO MODEL <---
-        gemini = ChatGoogleGenerativeAI(model="gemini-3.1-pro")
+        # Uses Google's smartest "Pro" model
+        gemini = ChatGoogleGenerativeAI(model="gemini-1.5-pro")
         search_tool = DuckDuckGoSearchRun()
 
         # Agent 1: The Client
