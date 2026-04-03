@@ -1,5 +1,6 @@
 streamlit
 crewai
 langchain
+langchain-community
 langchain-google-genai
 duckduckgo-search
