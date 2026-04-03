@@ -1,7 +1,8 @@
 import streamlit as st
 import os
-from langchain_community.tools import DuckDuckGoSearchRun
 from crewai import Agent, Task, Crew, Process
+from crewai.tools import tool
+from duckduckgo_search import DDGS
 
 st.set_page_config(page_title="Upwork AI Optimizer", layout="wide")
 st.title("🚀 Upwork Competitor Analyzer (PRO VERSION)")
@@ -9,7 +10,6 @@ st.markdown("This system secretly browses top Upwork profiles for you and finds 
 
 if "GOOGLE_API_KEY" in st.secrets:
     os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
-    # CrewAI's internal system strictly looks for GEMINI_API_KEY, so we duplicate it here
     os.environ["GEMINI_API_KEY"] = st.secrets["GOOGLE_API_KEY"] 
 else:
     st.error("Missing Google API Key in secrets! Please add it in Streamlit settings.")
@@ -17,12 +17,16 @@ else:
 skill = st.text_input("What is your core freelance skill?", value="Social Media Marketing, Meta Ads")
 client = st.text_input("Who is your ideal client?", value="E-commerce stores")
 
+# We build a custom CrewAI tool directly, bypassing LangChain's Pydantic clashes
+@tool("Web Search Tool")
+def search_tool(query: str) -> str:
+    """Search the web for upwork profiles and competitor information."""
+    results = DDGS().text(query, max_results=5)
+    return str(results)
+
 if st.button("Start Scraping and Analyzing"):
     with st.spinner("AI is thinking... Give it 1 to 3 minutes. Do not close the page."):
         try:
-            search_tool = DuckDuckGoSearchRun()
-            
-            # Feed the model name as a direct string, bypassing LangChain entirely
             model_name = "gemini/gemini-3.1-flash-lite"
 
             agent_buyer = Agent(
@@ -75,7 +79,6 @@ if st.button("Start Scraping and Analyzing"):
             result = crew.kickoff()
 
             st.success("✅ Analysis Complete! See your customized blueprint below:")
-            # Updated to handle CrewAI's newest output formatting
             st.markdown(result.raw if hasattr(result, 'raw') else str(result))
             
         except Exception as e:
