@@ -3,4 +3,4 @@ crewai
 langchain
 langchain-community
 langchain-google-genai
-duckduckgo-search
+duckduckgo-search>=6.2.0
