@@ -27,7 +27,7 @@ def search_tool(query: str) -> str:
 if st.button("Start Scraping and Analyzing"):
     with st.spinner("AI is thinking... The system is running slowly to respect free-tier limits. Please give it 3 to 5 minutes."):
         try:
-            model_name = "gemini/gemini-1.5-flash"
+            model_name = "gemini/gemini-2.5-flash"
 
             agent_buyer = Agent(
                 role='Upwork Client Simulator',
