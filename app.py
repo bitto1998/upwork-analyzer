@@ -23,8 +23,8 @@ client = st.text_input("Who is your ideal client?", value="E-commerce stores")
 if st.button("Start Scraping and Analyzing"):
     with st.spinner("AI is thinking... Give it 1 to 3 minutes. Do not close the page."):
         
-        # Uses Google's smartest "Pro" model
-        gemini = ChatGoogleGenerativeAI(model="gemini-1.5-pro")
+        # Uses the requested Flash Lite model
+        gemini = ChatGoogleGenerativeAI(model="gemini-3.1-flash-lite")
         search_tool = DuckDuckGoSearchRun()
 
         # Agent 1: The Client
@@ -67,7 +67,7 @@ if st.button("Start Scraping and Analyzing"):
         )
         
         t3 = Task(
-            description='Create a Master Blueprint for the user with: 1) Top 10 Keywords, 2) Formatting tips (paragraphs vs bullets), 3) A copy-paste example intro paragraph based ONLY on the competitors.', 
+            description='Create a Master Blueprint for the user with: Top 10 Keywords, Formatting tips, A copy-paste example intro paragraph based ONLY on the competitors.', 
             agent=agent_seo, 
             expected_output="Final SEO Upwork Guide."
         )
