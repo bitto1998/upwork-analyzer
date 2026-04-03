@@ -27,7 +27,7 @@ def search_tool(query: str) -> str:
 if st.button("Start Scraping and Analyzing"):
     with st.spinner("AI is thinking... Give it 1 to 3 minutes. Do not close the page."):
         try:
-            model_name = "gemini/gemini-3-flash"
+            model_name = "gemini/gemini-2.5-flash"
 
             agent_buyer = Agent(
                 role='Upwork Client Simulator',
