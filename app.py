@@ -1,5 +1,6 @@
 import streamlit as st
 import os
+import time
 from crewai import Agent, Task, Crew, Process
 from crewai.tools import tool
 from duckduckgo_search import DDGS
@@ -17,7 +18,6 @@ else:
 skill = st.text_input("What is your core freelance skill?", value="Social Media Marketing, Meta Ads")
 client = st.text_input("Who is your ideal client?", value="E-commerce stores")
 
-# We build a custom CrewAI tool directly, bypassing LangChain's Pydantic clashes
 @tool("Web Search Tool")
 def search_tool(query: str) -> str:
     """Search the web for upwork profiles and competitor information."""
@@ -25,7 +25,7 @@ def search_tool(query: str) -> str:
     return str(results)
 
 if st.button("Start Scraping and Analyzing"):
-    with st.spinner("AI is thinking... Give it 1 to 3 minutes. Do not close the page."):
+    with st.spinner("AI is thinking... The system is running slowly to respect free-tier limits. Please give it 3 to 5 minutes."):
         try:
             model_name = "gemini/gemini-1.5-flash"
 
@@ -73,7 +73,8 @@ if st.button("Start Scraping and Analyzing"):
             crew = Crew(
                 agents=[agent_buyer, agent_scraper, agent_seo], 
                 tasks=[t1, t2, t3], 
-                process=Process.sequential
+                process=Process.sequential,
+                max_rpm=3
             )
             
             result = crew.kickoff()
